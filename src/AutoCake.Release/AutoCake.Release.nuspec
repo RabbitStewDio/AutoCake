@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Thomas Morgner</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+This package contains a git-flow based release template.
+Starting from either the develop branch or an release-branch,
+this script will attempt to validate a release build. 
+
+The script uses GitVersion to calculate the release version number 
+and takes care of all the necessary branching and tagging during 
+the build.
+
+Building happens via a Cake action, and normally simply calls
+out to the standard 'build.cake' file for the project.
+
+If successful, it will merge that release into the master-branch
+and rebuild the actual release to create the release artefacts.
+On success of that step, the release branch will be merged back
+into the develop branch to start the next development cycle.
+
+If the release fails, this script will undo all changes to
+master, but will leave the release branch open so that the release
+can be fixed. Subsequent release attempts will reuse the existing
+release branch, even if started from the develop branch.
+    </description>
+    <copyright>Copyright 2017</copyright>
+    <tags>Cake Release</tags>
+  </metadata>
+  <files>
+    <file src="release-tasks.cake" target="tools/"/>
+    <file src="git-tasks.cake" target="tools/"/>
+    <file src="*.cake" target="content/"/>
+    <file src="*.cs" target="content/"/>
+    <file src="*.md" target="content/"/>
+    <file src="*bin/$configuration$/$id$.dll" target="tools/"/>
+    <file src="*bin/$configuration$/$id$.dll" target="lib/Net45/"/>
+  </files>
+</package>

@@ -10,20 +10,19 @@ GitFlow.Configure(Context);
 Task("_Record-Build-State")
   .Does(GitFlow.RecordBuildState);
 
-Task("_Prepare-Release-Branch")
+Task("_Prepare-Staging-Branch")
   .IsDependentOn("_Record-Build-State")
   .IsDependentOn("Verify-No-Uncommited-Changes")
-  .Does(GitFlow.PrepareReleaseBranch);
+  .Does(GitFlow.PrepareStagingBranch);
 
 Task("_Attempt-Staging-Build")
   .IsDependentOn("_Record-Build-State")
-  .IsDependentOn("_Prepare-Release-Branch")
-  .Does(GitFlow.AttemptReleaseBuild);
-
+  .IsDependentOn("_Prepare-Staging-Branch")
+  .Does(GitFlow.AttemptStagingBuild);
 
 Task("_Finalize-Release-PrepareBranch")
   .IsDependentOn("_Record-Build-State")
-  .IsDependentOn("_Prepare-Release-Branch")
+  .IsDependentOn("_Prepare-Staging-Branch")
   .Does(GitFlow.FinalizeRelease_PrepareBranchAndMerge);
 
 Task("_Finalize-Release-Build")
@@ -56,8 +55,8 @@ Task("Create-Staging-Branch")
                "the new branch to a remote git-reference")
   .IsDependentOn("Verify-No-Uncommited-Changes")
   .IsDependentOn("_Record-Build-State")
-  .IsDependentOn("_Prepare-Release-Branch")
-  .Does(GitFlow.PushReleaseBranch);
+  .IsDependentOn("_Prepare-Staging-Branch")
+  .Does(GitFlow.PushStagingBranch);
 
 Task("Validate-Release")
   .Description("Attempts to build the full release but does not change branches or merge the release")

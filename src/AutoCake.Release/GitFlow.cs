@@ -44,7 +44,7 @@ public static class GitFlow
                 "There are uncommited changes in the working tree. Please commit or remove these before proceeding.");
     }
 
-    public static void PrepareReleaseBranch()
+    public static void PrepareStagingBranch()
     {
         if (State == null)
             throw new ArgumentNullException("state");
@@ -61,19 +61,19 @@ public static class GitFlow
         {
             if (GitAlias.CheckBranchExists(Context, stageBranchName))
             {
-                Context.Log.Information("Switching to release branch from " + versionInfo.BranchName + " as branch " +
+                Context.Log.Information("Switching to staging branch from " + versionInfo.BranchName + " as branch " +
                                         stageBranchName);
                 GitAlias.Checkout(Context, stageBranchName);
             }
             else
             {
-                Context.Log.Information("Creating new release branch from " + versionInfo.BranchName + " as branch " +
+                Context.Log.Information("Creating new staging branch from " + versionInfo.BranchName + " as branch " +
                                         stageBranchName);
                 GitAlias.Branch(Context, stageBranchName);
 
                 // We created a new branch, and that branch may be a long living branch. So lets change the version number
                 // information once for our developers.
-                UpdateVersionNumbers("release");
+                UpdateVersionNumbers("staging");
             }
         }
         else
@@ -84,7 +84,7 @@ public static class GitFlow
         }
     }
 
-    public static void PushReleaseBranch()
+    public static void PushStagingBranch()
     {
         var versionInfo = GitVersioningAliases.FetchVersion();
         var stageBranchName = string.Format(ReleaseBranchPattern, versionInfo.MajorMinorPatch);
@@ -181,12 +181,12 @@ public static class GitFlow
         State = new BuildState();
     }
 
-    public static void AttemptReleaseBuild()
+    public static void AttemptStagingBuild()
     {
         // We are now supposed to be on the release branch.
         EnsureOnReleaseBranch();
 
-        Context.Log.Information("Building release as release candidate.");
+        Context.Log.Information("Building current release as release candidate.");
         ValidateBuild();
     }
 
@@ -217,6 +217,7 @@ public static class GitFlow
         // We always want to ensure that release-branch (master) now matches 100% with the staging branch (release-1.0.0).
         // We therefore do not use a normal merge, which can end in conflicts and so on.
         GitAlias.MergeRelease(Context, State.StagingBranch);
+        UpdateVersionNumbers("release");
     }
 
     public static void FinalizeRelease_Build()
@@ -275,9 +276,9 @@ public static class GitFlow
     public static void AttemptRelease()
     {
         RecordBuildState();
-        PrepareReleaseBranch();
+        PrepareStagingBranch();
 
-        AttemptReleaseBuild();
+        AttemptStagingBuild();
 
         FinalizeRelease();
 

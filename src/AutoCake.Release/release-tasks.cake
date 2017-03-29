@@ -10,6 +10,10 @@ GitFlow.Configure(Context);
 Task("_Record-Build-State")
   .Does(GitFlow.RecordBuildState);
 
+Task("_Validate-Build-State")
+  .IsDependentOn("_Record-Build-State")
+  .Does(GitFlow.ValidateBuildState);
+
 Task("_Prepare-Staging-Branch")
   .IsDependentOn("_Record-Build-State")
   .IsDependentOn("Verify-No-Uncommited-Changes")
@@ -35,6 +39,7 @@ Task("_Finalize-Release-Push")
   .Does(GitFlow.FinalizeRelease_Build);
 
 Task("_Finalize-Release")
+  .IsDependentOn("_Validate-Build-State")
   .IsDependentOn("_Attempt-Staging-Build")
   .IsDependentOn("_Finalize-Release-Build")
   .IsDependentOn("_Finalize-Release-Push")
@@ -73,6 +78,7 @@ Task("Attempt-Release")
                "is successfully released on the release target branch.")
   .IsDependentOn("Verify-No-Uncommited-Changes")
   .IsDependentOn("_Record-Build-State")
+  .IsDependentOn("_Validate-Build-State")
   .IsDependentOn("_Attempt-Staging-Build")
   .IsDependentOn("_Finalize-Release")
   .IsDependentOn("_Continue-Development");

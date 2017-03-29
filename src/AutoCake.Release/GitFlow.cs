@@ -6,7 +6,7 @@ using Cake.Core.Diagnostics;
 
 public static class GitFlow
 {
-    public static string ReleaseBranchPattern { get; set; }
+    public static string StagingBranchPattern { get; set; }
 
     public static string VersionTagPattern { get; set; }
 
@@ -30,7 +30,7 @@ public static class GitFlow
     public static void Configure(ICakeContext context)
     {
         Context = context;
-        ReleaseBranchPattern = "release-{0}";
+        StagingBranchPattern = "release-{0}";
         VersionTagPattern = "v{0}";
         ReleaseTargetBranch = context.Argument("release", "master");
         DevelopBranch = context.Argument("dev", "develop");
@@ -87,7 +87,7 @@ public static class GitFlow
     public static void PushStagingBranch()
     {
         var versionInfo = GitVersioningAliases.FetchVersion();
-        var stageBranchName = string.Format(ReleaseBranchPattern, versionInfo.MajorMinorPatch);
+        var stageBranchName = string.Format(StagingBranchPattern, versionInfo.MajorMinorPatch);
         if (!string.IsNullOrEmpty(PushTarget))
         {
             Context.Log.Information("Publishing staging branch to public source repository.");
@@ -179,6 +179,15 @@ public static class GitFlow
         EnsureNoUncommitedChanges();
 
         State = new BuildState();
+    }
+
+    public static void ValidateBuildState()
+    {
+        if (State == null)
+            throw new ArgumentNullException("state");
+
+        GitAlias.CheckBranchExists(Context, DevelopBranch);
+        GitAlias.CheckBranchExists(Context, ReleaseTargetBranch);
     }
 
     public static void AttemptStagingBuild()
@@ -305,7 +314,7 @@ public static class GitFlow
 
         public string StagingBranch
         {
-            get { return string.Format(ReleaseBranchPattern, Version.MajorMinorPatch); }
+            get { return string.Format(StagingBranchPattern, Version.MajorMinorPatch); }
         }
 
         public string ProcessTag { get; private set; }

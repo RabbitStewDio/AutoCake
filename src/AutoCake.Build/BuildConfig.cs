@@ -179,7 +179,11 @@ public static class BuildConfig
         Context = context;
         Configuration = Context.Argument("configuration", "Release");
         UseXBuildOnWindows = Context.Argument("forcexbuild", false);
-        TargetDirectory = Context.Argument("targetdir", TargetDirectory);
+        var targetDir = Context.Argument<string>("targetdir", null);
+        if (targetDir != null)
+        {
+            TargetDirectory = targetDir;
+        }
 
         var platform = Context.Argument("platforms", Context.Argument<string>("platforms", null));
         if (platform != null)

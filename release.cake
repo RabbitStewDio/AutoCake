@@ -13,7 +13,13 @@ GitFlow.RunBuildTarget = () =>
 {
   // See release-scripts/README.md for additional configuration options
   // and details on the syntax of this call.
-  CakeRunnerAlias.RunCake(Context);
+  var versionInfo = GitVersioningAliases.FetchVersion();
+  CakeRunnerAlias.RunCake(Context, new CakeSettings {
+        Arguments = new Dictionary<string, string>()
+        {
+            { "targetdir", "build-artefacts/" + versionInfo.FullSemVer }
+        }
+  });
 };
 
 var target = Argument("target", "Default");

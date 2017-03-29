@@ -16,7 +16,12 @@ public static class CakeRunnerAlias
         return string.Join(" ", Environment.GetCommandLineArgs());
     }
 
-    public static void RunCake(ICakeContext context, string script = null, CakeSettings settings = null)
+    public static void RunCake(ICakeContext context, CakeSettings settings = null)
+    {
+        RunCake(context, null, settings);
+    }
+
+    public static void RunCake(ICakeContext context, string script, CakeSettings settings = null)
     {
         var rawArgs = QuoteAwareStringSplitter.Split(GetCommandLine()).Skip(1) // Skip executable.
             .ToArray();

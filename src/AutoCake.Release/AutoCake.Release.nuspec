@@ -4,7 +4,7 @@
     <id>$id$</id>
     <version>$version$</version>
     <title>$title$</title>
-    <authors>Thomas Morgner</authors>
+    <authors>tmorgner</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
 This package contains a git-flow based release template.
@@ -28,6 +28,9 @@ master, but will leave the release branch open so that the release
 can be fixed. Subsequent release attempts will reuse the existing
 release branch, even if started from the develop branch.
     </description>
+    <licenseUrl>https://raw.githubusercontent.com/RabbitStewDio/AutoCake/develop/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/RabbitStewDio/AutoCake</projectUrl>
+    <summary>A automatic release system using Cake and GitFlow to produce and publish builds in a single step.</summary>
     <copyright>Copyright 2017</copyright>
     <tags>Cake Release</tags>
   </metadata>

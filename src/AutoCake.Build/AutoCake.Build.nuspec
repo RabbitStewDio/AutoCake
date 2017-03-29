@@ -4,7 +4,7 @@
     <id>$id$</id>
     <version>$version$</version>
     <title>$title$</title>
-    <authors>Thomas Morgner</authors>
+    <authors>tmorgner</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
 This is a standardized set of build script components that provide reliable builds to 
@@ -13,6 +13,9 @@ projects that follow some basic standard conventions.
 The build script will compile the projects for all allowed and defined architectures, 
 run tests, build human readable test reports and build (and optionally publish) NuGet packages.
     </description>
+    <licenseUrl>https://raw.githubusercontent.com/RabbitStewDio/AutoCake/develop/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/RabbitStewDio/AutoCake</projectUrl>
+    <summary>A automatic release system using Cake and GitFlow to produce and publish builds in a single step.</summary>
     <copyright>Copyright 2017</copyright>
     <tags>Cake GitVersion Build Release</tags>
   </metadata>

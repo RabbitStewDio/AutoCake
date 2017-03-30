@@ -33,4 +33,15 @@ and rebuilt to include the final release-version numbers. Once completed, the
 release branch is merged back into the development branch and the development
 version number is incremented.
 
+# No Linux support
 
+You can use the build script to compile and test your code, but you won't be
+able to actually build any NuGet packages.
+
+"NuGet pack" is intimately mixed up with MSBuild internals. NuGet currently 
+does not work on Linux, and the MSBuild project does not produce standalone
+releases that may work on Linux, therefore it is impossible to actually produce 
+NuGet packages in a controlled fashion. 
+
+The alternative "dotnet pack" command makes no mention of honouring nuspec 
+files and as usual the documentation is thin on how it works internally.

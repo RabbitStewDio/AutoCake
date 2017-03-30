@@ -7,11 +7,8 @@
     <authors>tmorgner</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-This is a standardized set of build script components that provide reliable builds to 
-projects that follow some basic standard conventions. 
-
-The build script will compile the projects for all allowed and defined architectures, 
-run tests, build human readable test reports and build (and optionally publish) NuGet packages.
+This is a standardized set of build script components that provide reliable builds to projects that follow some basic standard conventions. 
+The build script will compile the projects for all allowed and defined architectures, run tests, build human readable test reports and build (and optionally publish) NuGet packages.
     </description>
     <licenseUrl>https://raw.githubusercontent.com/RabbitStewDio/AutoCake/develop/LICENSE</licenseUrl>
     <projectUrl>https://github.com/RabbitStewDio/AutoCake</projectUrl>

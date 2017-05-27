@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Cake.Common.Solution.Project;
 using Cake.Core;
@@ -87,6 +88,8 @@ public sealed class ExtProjectParser
                 "Silly error: The parser should never make the root element of a document into a null value");
 
         var projectProperties = new Dictionary<string, string>();
+        projectProperties.Add("Platform", platform);
+        projectProperties.Add("Configuration", configuration);
 
         // Parsing the build file is sensitive to the declared order of elements.
         // If there are include files, then these files must be honored too.
@@ -188,8 +191,20 @@ public sealed class ExtProjectParser
     {
         string result;
         if (d.TryGetValue(key, out result))
-            return result;
+        {
+          return ResolveProperty(result, d);
+        }
         return value;
+    }
+
+    string ResolveProperty(string property, Dictionary<string, string> pool)
+    {
+        // crude replace 
+        foreach (var pair in pool)
+        {
+            property = property.Replace("$(" + pair.Key + ")", pair.Value);
+        }
+        return property;
     }
 
     void ParseProjectProperties(string configuration, string platform, XDocument document,

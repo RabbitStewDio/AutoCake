@@ -16,3 +16,4 @@
 #load "TaskActions.cs"
 #load "UnitTestActions.cs"
 #load "XBuildHelper.cs"
+#load "ExtendedSolutionParser.cs"

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cake.Common.Solution.Project;
@@ -26,7 +27,7 @@ public class ExtProjectParserResult
         string platformTarget,
         string projectGuid,
         string outputType,
-        DirectoryPath outputPath,
+        string outputPath,
         string rootNameSpace,
         string assemblyName,
         string targetFrameworkVersion,
@@ -35,6 +36,16 @@ public class ExtProjectParserResult
         IEnumerable<ProjectAssemblyReference> references,
         IEnumerable<ProjectReference> projectReferences)
     {
+        if (String.IsNullOrEmpty(platform))
+        {
+            throw new ArgumentException("platform");
+        }
+
+        if (String.IsNullOrEmpty(configuration))
+        {
+            throw new ArgumentException("configuration");
+        }
+
         Configuration = configuration;
         Platform = platform;
         PlatformTarget = platformTarget;
@@ -48,6 +59,11 @@ public class ExtProjectParserResult
         Files = files.ToList().AsReadOnly();
         References = references.ToList().AsReadOnly();
         ProjectReferences = projectReferences.ToList().AsReadOnly();
+
+        if (outputPath.Contains("$("))
+        {
+            throw new Exception("The output path has not been resolved:" + outputPath);
+        }
     }
 
     /// <summary>Gets the build configuration.</summary>

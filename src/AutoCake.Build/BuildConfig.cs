@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Cake.Common;
 using Cake.Common.Diagnostics;
 using Cake.Common.IO;
@@ -51,6 +53,12 @@ public static class BuildConfig
 
 #endregion
 ";
+
+    /// <summary>
+    ///     Declares that this project does not do any compile or test work and
+    ///     that it is OK for it to not have projects to build.
+    /// </summary>
+    public static bool NoProjectsToBuildHere { get; set; }
 
     /// <summary>
     ///     Specifies the target directory that will hold all build artefacts.
@@ -261,8 +269,19 @@ public static class BuildConfig
 
     static EffectiveBuildConfig BuildEffectiveConfiguration()
     {
-        List<FilePath> effectiveProjects;
         var c = new EffectiveBuildConfig();
+        if (NoProjectsToBuildHere)
+        {
+            Context.Log.Information("Skipping project parsing. No projects will be built.");
+            c.Configuration = Configuration ?? "Debug";
+            c.PlatformBuildOrder = new List<PlatformTarget>();
+            c.ProjectFiles = new List<FilePath>();
+            c.ProjectsByPlatform = new Dictionary<PlatformTarget, List<ParsedProject>>();
+            c.SolutionDir = SolutionDir;
+            return c;
+        }
+
+        List<FilePath> effectiveProjects;
         if (Projects != null && Projects.Count > 0)
         {
             Context.Log.Information("Using manually defined projects and solution directory for build.");
@@ -312,7 +331,9 @@ public static class BuildConfig
         c.Configuration = Configuration ?? "Debug";
         c.ProjectFiles = effectiveProjects;
         foreach (var proj in effectiveProjects)
+        {
             Context.Log.Information("  Found project " + Context.Environment.WorkingDirectory.GetRelativePath(proj));
+        }
 
         // unless defined otherwise, we attempt to build every supported platform.
         var platforms = Platforms.Count > 0
@@ -320,6 +341,11 @@ public static class BuildConfig
             : new List<PlatformTarget>(new[]
                 {PlatformTarget.MSIL, PlatformTarget.x86, PlatformTarget.x64, PlatformTarget.ARM});
         var parseResult = XBuildHelper.ParseProjects(Context, c.Configuration, platforms, c.ProjectFiles);
+        if (c.Solution != null)
+        {
+            parseResult = new ExtendedSolutionParser().Filter(Context, c.Solution, parseResult, c.Configuration);
+        }
+
         c.PlatformBuildOrder = parseResult.PlatformBuildOrder;
         c.ProjectsByPlatform = parseResult.ProjectsByPlatform;
 
@@ -339,14 +365,18 @@ public static class BuildConfig
                 Context.Log.Information("  <no projects defined>");
             else
                 foreach (var project in list)
+                {
                     Context.Log.Information("  " +
-                                            Context.Environment.WorkingDirectory.GetRelativePath(project.ProjectFile));
+                                            Context.Environment.WorkingDirectory.GetRelativePath(project.ProjectFile) +
+                                            "; OutputPath=" +
+                                            Context.Environment.WorkingDirectory.GetRelativePath(
+                                                project.Project.OutputPath.MakeAbsolute(Context.Environment)));
+                }
         }
         Context.Log.Information("--------------------------------");
 
         return c;
     }
-
 
     public static string ConvertPlatformTargetToString(PlatformTarget target)
     {

@@ -53,6 +53,12 @@ public static class BuildConfig
 ";
 
     /// <summary>
+    ///     Declares that this project does not do any compile or test work and
+    ///     that it is OK for it to not have projects to build.
+    /// </summary>
+    public static bool NoProjectsToBuildHere { get; set; }
+
+    /// <summary>
     ///     Specifies the target directory that will hold all build artefacts.
     ///     This defaults to "./build-artefacts".
     /// </summary>
@@ -261,8 +267,19 @@ public static class BuildConfig
 
     static EffectiveBuildConfig BuildEffectiveConfiguration()
     {
-        List<FilePath> effectiveProjects;
         var c = new EffectiveBuildConfig();
+        if (NoProjectsToBuildHere)
+        {
+            Context.Log.Information("Skipping project parsing. No projects will be built.");
+            c.Configuration = Configuration ?? "Debug";
+            c.PlatformBuildOrder = new List<PlatformTarget>();
+            c.ProjectFiles = new List<FilePath>();
+            c.ProjectsByPlatform = new Dictionary<PlatformTarget, List<ParsedProject>>();
+            c.SolutionDir = SolutionDir;
+            return c;
+        }
+
+        List<FilePath> effectiveProjects;
         if (Projects != null && Projects.Count > 0)
         {
             Context.Log.Information("Using manually defined projects and solution directory for build.");

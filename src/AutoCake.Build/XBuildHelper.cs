@@ -17,11 +17,16 @@ public static class XBuildHelper
     public static ICakeContext Context { get; private set; }
 
     public static DotNetCoreRestoreSettings DotNetCoreRestoreSettings { get; set; }
+    public static bool NeverUseDotNetCore { get; set; }
 
     public static bool DotNetExists
     {
         get
         {
+            if (NeverUseDotNetCore)
+            {
+                return false;
+            }
             if (dotNetExists == null)
             {
                 var tool = new DotNetGeneralTool(Context.FileSystem,

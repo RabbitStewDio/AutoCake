@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Cake.Common;
 using Cake.Common.Diagnostics;
 using Cake.Common.IO;
@@ -329,7 +331,9 @@ public static class BuildConfig
         c.Configuration = Configuration ?? "Debug";
         c.ProjectFiles = effectiveProjects;
         foreach (var proj in effectiveProjects)
+        {
             Context.Log.Information("  Found project " + Context.Environment.WorkingDirectory.GetRelativePath(proj));
+        }
 
         // unless defined otherwise, we attempt to build every supported platform.
         var platforms = Platforms.Count > 0
@@ -337,6 +341,11 @@ public static class BuildConfig
             : new List<PlatformTarget>(new[]
                 {PlatformTarget.MSIL, PlatformTarget.x86, PlatformTarget.x64, PlatformTarget.ARM});
         var parseResult = XBuildHelper.ParseProjects(Context, c.Configuration, platforms, c.ProjectFiles);
+        if (c.Solution != null)
+        {
+            parseResult = new ExtendedSolutionParser().Filter(Context, c.Solution, parseResult, c.Configuration);
+        }
+
         c.PlatformBuildOrder = parseResult.PlatformBuildOrder;
         c.ProjectsByPlatform = parseResult.ProjectsByPlatform;
 
@@ -356,14 +365,18 @@ public static class BuildConfig
                 Context.Log.Information("  <no projects defined>");
             else
                 foreach (var project in list)
+                {
                     Context.Log.Information("  " +
-                                            Context.Environment.WorkingDirectory.GetRelativePath(project.ProjectFile));
+                                            Context.Environment.WorkingDirectory.GetRelativePath(project.ProjectFile) +
+                                            "; OutputPath=" +
+                                            Context.Environment.WorkingDirectory.GetRelativePath(
+                                                project.Project.OutputPath.MakeAbsolute(Context.Environment)));
+                }
         }
         Context.Log.Information("--------------------------------");
 
         return c;
     }
-
 
     public static string ConvertPlatformTargetToString(PlatformTarget target)
     {

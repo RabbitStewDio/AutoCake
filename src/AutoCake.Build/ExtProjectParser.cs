@@ -202,7 +202,6 @@ public sealed class ExtProjectParser
         // crude replace 
         foreach (var pair in pool)
         {
-            _context.Log.Debug("Replacing $(" + pair.Key + ") with '" + pair.Value +"'");
             property = property.Replace("$(" + pair.Key + ")", pair.Value);
         }
         return property;

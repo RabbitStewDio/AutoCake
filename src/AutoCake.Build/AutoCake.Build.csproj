@@ -57,6 +57,7 @@
     <Compile Include="BuildConfig.cs" />
     <Compile Include="DotNetGeneralTool.cs" />
     <Compile Include="EffectiveBuildConfig.cs" />
+    <Compile Include="ExtendedSolutionParser.cs" />
     <Compile Include="ExtProjectParser.cs" />
     <Compile Include="ExtProjectParserResult.cs" />
     <Compile Include="NuGetXAlias.cs" />

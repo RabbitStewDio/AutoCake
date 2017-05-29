@@ -15,15 +15,11 @@ Task("Fetch-Version")
     Information("  Sha1   : " + versionInfo.Sha);
     
 });
-    
+
 Task("Apply-Version")
     .IsDependentOn("Fetch-Version")
     .Does(() =>
 {
-    GitVersion(new GitVersionSettings
-    {
-        UpdateAssemblyInfo = true,
-        LogFilePath = "console",
-        OutputType = GitVersionOutput.BuildServer
-    });
+    var versionInfo = GitVersioningAliases.FetchVersion();
+		GitFlow.ApplyVersionNumbers("manual", versionInfo.AssemblySemVer);
 });

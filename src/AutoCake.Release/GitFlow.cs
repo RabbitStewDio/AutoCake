@@ -27,6 +27,13 @@ public static class GitFlow
 
     public static BuildState State { get; set; }
 
+    public static Action<string, string> ApplyVersionNumbers { get; set; }
+
+    static GitFlow()
+    {
+        ApplyVersionNumbers = DefaultApplyVersionNumbers;
+    }
+
     public static void Configure(ICakeContext context)
     {
         Context = context;
@@ -98,6 +105,12 @@ public static class GitFlow
     public static void UpdateVersionNumbers(string target)
     {
         var versionInfo = GitVersioningAliases.FetchVersion();
+        ApplyVersionNumbers(target, versionInfo.AssemblySemVer);
+        GitAlias.Commit(Context, "Updating version info for " + target + " branch " + versionInfo.SemVer, true);
+    }
+
+    public static void DefaultApplyVersionNumbers(string target, string version)
+    {
         Context.Log.Information("Updating version information for all assemblies");
         Context.GitVersion(new GitVersionSettings
         {
@@ -106,7 +119,6 @@ public static class GitFlow
             OutputType = GitVersionOutput.BuildServer
         });
 
-        GitAlias.Commit(Context, "Updating version info for " + target + " branch " + versionInfo.SemVer, true);
     }
 
     public static void ValidateBuild()

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>tmorgner</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+This package contains support classes that allow Cake to start an Apache Maven build.
+    </description>
+    <licenseUrl>https://raw.githubusercontent.com/RabbitStewDio/AutoCake/develop/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/RabbitStewDio/AutoCake</projectUrl>
+    <summary>A automatic release system using Cake and GitFlow to produce and publish builds in a single step.</summary>
+    <copyright>Copyright 2017</copyright>
+    <tags>Cake Release</tags>
+  </metadata>
+  <files>
+    <file src="tasks.cake" target="tools/"/>
+    <file src="*.cake" target="content/"/>
+    <file src="*.cs" target="content/"/>
+    <file src="*.md" target="content/"/>
+    <file src="*bin/$configuration$/$id$.dll" target="tools/"/>
+    <file src="*bin/$configuration$/$id$.dll" target="lib/Net45/"/>
+  </files>
+</package>

@@ -45,3 +45,7 @@ NuGet packages in a controlled fashion.
 
 The alternative "dotnet pack" command makes no mention of honouring nuspec 
 files and as usual the documentation is thin on how it works internally.
+
+# Maven support
+
+The [``AutoCake.Maven``](src/AutoCake.Maven/README.md) module provides a CakeTool for running maven targets.

@@ -25,7 +25,5 @@ If the release fails, this script will undo all changes to master, but will leav
     <file src="*.cake" target="content/"/>
     <file src="*.cs" target="content/"/>
     <file src="*.md" target="content/"/>
-    <file src="*bin/$configuration$/$id$.dll" target="tools/"/>
-    <file src="*bin/$configuration$/$id$.dll" target="lib/Net45/"/>
   </files>
 </package>

@@ -59,7 +59,9 @@ public static class GitFlow
         var versionInfo = GitVersioningAliases.FetchVersion();
         if (versionInfo.BranchName == ReleaseTargetBranch)
             throw new Exception(
-                "Cannot initiate a release from the release-target branch. Switch to a develop or release-xxx branch.");
+                "Cannot initiate a release from the release-target branch. Switch to a develop or release-xxx branch. \n" +
+                "Based on the current version information I expect to be on branch '" +
+                State.StagingBranch + "', but detected branch '" + versionInfo.BranchName + "' instead");
 
         // if on development branch, create a release branch.
         // if you work in a support-xx branch, treat it as your develop-branch.
@@ -87,7 +89,9 @@ public static class GitFlow
         {
             if (versionInfo.BranchName != stageBranchName)
                 throw new Exception(
-                    "This command must be exist run from the development branch or an active release branch.");
+                    "This command must be exist run from the development branch or an active release branch.\n " +
+                    "Based on the current version information I expect to be on branch '" +
+                    State.StagingBranch + "', but detected branch '" + versionInfo.BranchName + "' instead");
         }
     }
 
@@ -183,7 +187,7 @@ public static class GitFlow
         if (versionInfo.BranchName != State.StagingBranch)
             throw new Exception(
                 "Not on the release branch. Based on the current version information I expect to be on branch '" +
-                State.StagingBranch + "'");
+                State.StagingBranch + "', but detected branch '" + versionInfo.BranchName + "' instead");
     }
 
     public static void RecordBuildState()
@@ -200,6 +204,17 @@ public static class GitFlow
 
         GitAlias.CheckBranchExists(Context, DevelopBranch);
         GitAlias.CheckBranchExists(Context, ReleaseTargetBranch);
+    }
+
+    public static void ShowVersion()
+    {
+        if (State == null)
+            throw new ArgumentNullException("state");
+
+        var versionInfo = GitVersioningAliases.FetchVersion();
+        Context.Log.Information("Computed Version: " + versionInfo.FullSemVer);
+        Context.Log.Information("- Current branch: " + State.StartingBranch);
+        Context.Log.Information("- Staging-Branch: " + State.StagingBranch);
     }
 
     public static void AttemptStagingBuild()

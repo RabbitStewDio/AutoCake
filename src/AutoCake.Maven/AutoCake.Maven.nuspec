@@ -20,7 +20,5 @@ This package contains support classes that allow Cake to start an Apache Maven b
     <file src="*.cake" target="content/"/>
     <file src="*.cs" target="content/"/>
     <file src="*.md" target="content/"/>
-    <file src="*bin/$configuration$/$id$.dll" target="tools/"/>
-    <file src="*bin/$configuration$/$id$.dll" target="lib/Net45/"/>
   </files>
 </package>

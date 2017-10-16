@@ -21,8 +21,6 @@ The build script will compile the projects for all allowed and defined architect
     <file src="*.cake" target="content/"/>
     <file src="*.cs" target="content/"/>
     <file src="*.md" target="content/"/>
-    <file src="*Transforms/*" target="content/Transforms/"/>
-    <file src="*bin/$configuration$/$id$.dll" target="tools/"/>
-    <file src="*bin/$configuration$/$id$.dll" target="lib/Net45/"/>
+    <file src="Transforms/*" target="content/Transforms/"/>
   </files>
 </package>

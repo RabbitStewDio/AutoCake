@@ -17,8 +17,6 @@ This package contains support classes that allow Cake to start an Apache Maven b
   </metadata>
   <files>
     <file src="tasks.cake" target="tools/"/>
-    <file src="*.cake" target="content/"/>
     <file src="*.cs" target="content/"/>
-    <file src="*.md" target="content/"/>
   </files>
 </package>

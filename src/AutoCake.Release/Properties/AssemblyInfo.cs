@@ -12,5 +12,5 @@ using System.Reflection;
 // [assembly: AssemblyVersion("1.0.0.0")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.4.0.0")]
-[assembly: AssemblyInformationalVersion("1.4.0-beta.1+0.Branch.release-1.4.0.Sha.38467ab987830fcab596219b6baa9619e32ab4b1")]
+[assembly: AssemblyFileVersion("1.5.0.0")]
+[assembly: AssemblyInformationalVersion("1.5.0-unstable.0+Branch.develop.Sha.c82aa75f2b19ab311142438aa453d1e1d0df6ce3")]

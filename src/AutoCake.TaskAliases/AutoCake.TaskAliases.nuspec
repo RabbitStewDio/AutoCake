@@ -17,7 +17,6 @@ This package contains a few helper Cake aliases that make it possible to modify 
   </metadata>
   <files>
     <file src="task-aliases.cake" target="tools/"/>
-    <file src="*.cake" target="content/"/>
-    <file src="*.md" target="content/"/>
+    <file src="*.cs" target="content/"/>
   </files>
 </package>

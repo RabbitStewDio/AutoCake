@@ -18,9 +18,7 @@ The build script will compile the projects for all allowed and defined architect
   </metadata>
   <files>
     <file src="build-tasks.cake" target="tools/"/>
-    <file src="*.cake" target="content/"/>
     <file src="*.cs" target="content/"/>
-    <file src="*.md" target="content/"/>
     <file src="Transforms/*" target="content/Transforms/"/>
   </files>
 </package>

@@ -22,8 +22,6 @@ If the release fails, this script will undo all changes to master, but will leav
   <files>
     <file src="release-tasks.cake" target="tools/"/>
     <file src="git-tasks.cake" target="tools/"/>
-    <file src="*.cake" target="content/"/>
     <file src="*.cs" target="content/"/>
-    <file src="*.md" target="content/"/>
   </files>
 </package>

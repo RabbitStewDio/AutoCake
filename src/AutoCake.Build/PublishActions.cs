@@ -112,7 +112,11 @@ public static class PublishActions
         nugetSettings.Properties["Configuration"] = BuildConfig.Configuration;
         nugetSettings.Properties["Platform"] = BuildConfig.ConvertPlatformTargetToString(project.Platform);
         if (!string.IsNullOrEmpty(Version))
+        {
+            Context.Log.Information("Publishing package as version " + Version);
             nugetSettings.Properties["version"] = Version;
+            nugetSettings.Version = Version;
+        }
 
         if (settings.Tool.GetValueOrDefault())
         {

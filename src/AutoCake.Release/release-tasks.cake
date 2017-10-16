@@ -83,6 +83,10 @@ Task("Attempt-Release")
   .IsDependentOn("_Finalize-Release")
   .IsDependentOn("_Continue-Development");
 
+Task("Show-Version")
+  .Description("Prints the current branch information and the name of the next release branch.")
+  .IsDependentOn("_Record-Build-State")
+	.Does(GitFlow.ShowVersion);
 
 GitFlow.RunBuildTarget = () => 
 {

@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root", "Root", "{47C60247-1
 		..\tools\packages.config = ..\tools\packages.config
 		..\README.md = ..\README.md
 		..\release.cake = ..\release.cake
+		..\Changelog.md = ..\Changelog.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCake.Build", "AutoCake.Build\AutoCake.Build.csproj", "{9FF0EED6-122C-48F5-845D-192E232D7689}"

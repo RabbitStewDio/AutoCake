@@ -13,4 +13,4 @@ using System.Reflection;
 
 [assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.1.0.0")]
-[assembly: AssemblyInformationalVersion("2.1.0-beta.1+0.Branch.release-2.1.0.Sha.8233699f1150908c252fcc2ec78dbf54e25738b8")]
+[assembly: AssemblyInformationalVersion("2.1.0+0.Branch.master.Sha.da2140aab39c8d44ca767ef18dc031a3f5555ad7")]

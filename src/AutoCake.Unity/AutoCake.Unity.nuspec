@@ -7,16 +7,20 @@
     <authors>tmorgner</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-This package contains a few helper Cake aliases that make it possible to modify previously defined tasks to add new actions either before or after the task runs.
+This package contains support classes that allow Cake to start an Unity3D build.
     </description>
     <licenseUrl>https://raw.githubusercontent.com/RabbitStewDio/AutoCake/develop/LICENSE</licenseUrl>
     <projectUrl>https://github.com/RabbitStewDio/AutoCake</projectUrl>
     <summary>A automatic release system using Cake and GitFlow to produce and publish builds in a single step.</summary>
     <copyright>Copyright 2019</copyright>
-    <tags>Cake TaskAlias</tags>
+    <tags>Cake Unity</tags>
   </metadata>
   <files>
-    <file src="task-aliases.cake" target="tools/"/>
+    <file src="tasks.cake" target="tools/"/>
+    <file src="*.cake" target="content/"/>
     <file src="*.cs" target="content/"/>
+    <file src="*.md" target="content/"/>
+    <file src="*bin/$configuration$/$id$.dll" target="tools/"/>
+    <file src="*bin/$configuration$/$id$.dll" target="lib/Net45/"/>
   </files>
 </package>

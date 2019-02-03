@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cake.Common.Tools.DotNetCore;
 using Cake.Common.Tools.DotNetCore.Restore;
 using Cake.Common.Tools.MSBuild;
 using Cake.Common.Tools.NuGet;
@@ -58,24 +59,21 @@ public static class XBuildHelper
         s.NoCache = settings.NoCache;
         if (settings.Source != null)
             s.Sources = new List<string>(settings.Source);
-        if (settings.FallbackSource != null)
-            s.FallbackSources = new List<string>(settings.FallbackSource);
-
         return s;
     }
 
-    static DotNetCoreRestoreVerbosity? Convert(NuGetVerbosity? verbosity)
+    static DotNetCoreVerbosity? Convert(NuGetVerbosity? verbosity)
     {
         if (verbosity == null)
             return null;
         switch (verbosity.Value)
         {
             case NuGetVerbosity.Detailed:
-                return DotNetCoreRestoreVerbosity.Verbose;
+                return DotNetCoreVerbosity.Detailed;
             case NuGetVerbosity.Quiet:
-                return DotNetCoreRestoreVerbosity.Warning;
+                return DotNetCoreVerbosity.Quiet;
             default:
-                return DotNetCoreRestoreVerbosity.Information;
+                return DotNetCoreVerbosity.Normal;
         }
     }
 

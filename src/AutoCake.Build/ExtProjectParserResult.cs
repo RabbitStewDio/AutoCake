@@ -12,6 +12,7 @@ public class ExtProjectParserResult
     /// </summary>
     /// <param name="configuration">The build configuration.</param>
     /// <param name="platform">The target platform.</param>
+    /// <param name="platformTarget"></param>
     /// <param name="projectGuid">The unique project identifier.</param>
     /// <param name="outputType">The compiler output type.</param>
     /// <param name="outputPath">The compiler output path</param>

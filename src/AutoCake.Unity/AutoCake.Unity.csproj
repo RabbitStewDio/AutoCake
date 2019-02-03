@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9FF0EED6-122C-48F5-845D-192E232D7689}</ProjectGuid>
+    <ProjectGuid>{BABC249C-F329-4CAA-ADA8-1E84C7611F4F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoCake.Build</RootNamespace>
-    <AssemblyName>AutoCake.Build</AssemblyName>
+    <RootNamespace>AutoCake.Unity</RootNamespace>
+    <AssemblyName>AutoCake.Unity</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,9 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>5</LangVersion>
-    <DocumentationFile>bin\Debug\AutoCake.Build.XML</DocumentationFile>
-    <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,6 +37,9 @@
     <Reference Include="Cake.Core, Version=0.32.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Cake.Core.0.32.1\lib\net46\Cake.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Cake.Unity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Cake.Unity.0.5.2\lib\net46\Cake.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
@@ -54,59 +54,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnyBuildSettings.cs" />
-    <Compile Include="AnyUnitTestSettings.cs" />
-    <Compile Include="BuildActions.cs" />
-    <Compile Include="BuildConfig.cs" />
-    <Compile Include="DotNetGeneralTool.cs" />
-    <Compile Include="EffectiveBuildConfig.cs" />
-    <Compile Include="ExtendedSolutionParser.cs" />
-    <Compile Include="ExtProjectParser.cs" />
-    <Compile Include="ExtProjectParserResult.cs" />
-    <Compile Include="NuGetXAlias.cs" />
-    <Compile Include="NuGetXPackSettings.cs" />
-    <Compile Include="NuGetXPusher.cs" />
-    <Compile Include="NuGetXPushSettings.cs" />
-    <Compile Include="ParsedProject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\BuildMetaDataAssemblyInfo.cs" />
-    <Compile Include="Properties\StaticAssemblyInfo.cs" />
-    <Compile Include="PublishActions.cs" />
-    <Compile Include="ReportActions.cs" />
-    <Compile Include="TaskActions.cs" />
-    <Compile Include="UnitTestActions.cs" />
-    <Compile Include="XBuildHelper.cs" />
+    <Compile Include="UnityBuildActions.cs" />
+    <Compile Include="UnityBuildTargetType.cs" />
+    <Compile Include="UnityEditorTool.cs" />
+    <Compile Include="UnityEditorToolArguments.cs" />
+    <Compile Include="UnityEditorToolSettings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Transforms\HtmlTransform-v2.xslt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="build-tasks.cake">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="dependencies.cake">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="README.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Transforms\README.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="AutoCake.Build.nuspec" />
+    <None Include="dependencies.cake" />
     <None Include="packages.config" />
-    <None Include="publish-tasks.cake" />
+    <None Include="tasks.cake" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

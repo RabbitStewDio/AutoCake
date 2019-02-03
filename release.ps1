@@ -28,10 +28,6 @@ Performs a dry run of the build script.
 No tasks will be executed.
 .PARAMETER Mono
 Tells Cake to use the Mono scripting engine.
-.PARAMETER Help
-Prints a list of all supported targets along with a descriptiong of the target.
-.PARAMETER ShowTree
-Prints a tree of build targets and their dependent tasks.
 .PARAMETER SkipToolPackageRestore
 Skips restoring of packages.
 .PARAMETER ScriptArgs
@@ -44,7 +40,7 @@ http://cakebuild.net
 
 [CmdletBinding()]
 Param(
-    [string]$Script = "build.cake",
+    [string]$Script = "release.cake",
     [string]$Target = "Default",
     [ValidateSet("Release", "Debug")]
     [string]$Configuration = "Release",
@@ -54,8 +50,6 @@ Param(
     [Alias("DryRun","Noop")]
     [switch]$WhatIf,
     [switch]$Mono,
-    [switch]$ShowTree,
-    [switch]$Help,
     [switch]$SkipToolPackageRestore,
     [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
     [string[]]$ScriptArgs
@@ -191,13 +185,5 @@ if (!(Test-Path $CAKE_EXE)) {
 
 # Start Cake
 Write-Host "Running build script..."
-if ($Help) {
-    Invoke-Expression "& `"$CAKE_EXE`" `"$Script`" -showdescription -verbosity=`"$Verbosity`" $UseMono $UseDryRun $UseExperimental $ScriptArgs"
-}
-elseif ($ShowTree) {
-    Invoke-Expression "& `"$CAKE_EXE`" `"$Script`" -showtree -verbosity=`"$Verbosity`" $UseMono $UseDryRun $UseExperimental $ScriptArgs"
-}
-else {
-    Invoke-Expression "& `"$CAKE_EXE`" `"$Script`" -target=`"$Target`" -configuration=`"$Configuration`" -verbosity=`"$Verbosity`" $UseMono $UseDryRun $UseExperimental $ScriptArgs"
-}
+Invoke-Expression "& `"$CAKE_EXE`" `"$Script`" -target=`"$Target`" -configuration=`"$Configuration`" -verbosity=`"$Verbosity`" $UseMono $UseDryRun $UseExperimental $ScriptArgs"
 exit $LASTEXITCODE

@@ -31,6 +31,7 @@ public sealed class FixedCakeRunner : Tool<CakeSettings>
     /// <param name="globber">The globber.</param>
     /// <param name="processRunner">The process runner.</param>
     /// <param name="tools">The tool locator.</param>
+    /// <param name="log"></param>
     public FixedCakeRunner(IFileSystem fileSystem,
         ICakeEnvironment environment,
         IGlobber globber,

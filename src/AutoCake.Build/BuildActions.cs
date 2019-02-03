@@ -34,12 +34,18 @@ public class BuildActions
             if (Context.DirectoryExists(bin))
             {
                 Context.Log.Debug(string.Format("  Cleaning {0}.", BuildConfig.AsRelativePath(bin)));
-                Context.DeleteDirectory(bin, true);
+                Context.DeleteDirectory(bin, new DeleteDirectorySettings
+                {
+                    Recursive = true
+                });
             }
             if (Context.DirectoryExists(obj))
             {
                 Context.Log.Debug(string.Format("  Cleaning {0}.", BuildConfig.AsRelativePath(obj)));
-                Context.DeleteDirectory(obj, true);
+                Context.DeleteDirectory(obj, new DeleteDirectorySettings
+                {
+                    Recursive = true
+                });
             }
         }
     }
@@ -54,7 +60,10 @@ public class BuildActions
             if (Context.DirectoryExists(packagesDir))
             {
                 Context.Log.Debug(string.Format("  Cleaning {0}.", BuildConfig.AsRelativePath(packagesDir)));
-                Context.DeleteDirectory(packagesDir, true);
+                Context.DeleteDirectory(packagesDir, new DeleteDirectorySettings
+                {
+                    Recursive = true
+                });
             }
         }
     }
@@ -64,7 +73,10 @@ public class BuildActions
         var packagesDir = BuildConfig.TargetDirectory;
         Context.Log.Verbose(string.Format("Cleaning build-artefacts directory: {0}", Context.MakeAbsolute(packagesDir)));
         if (Context.DirectoryExists(packagesDir))
-            Context.DeleteDirectory(packagesDir, true);
+            Context.DeleteDirectory(packagesDir, new DeleteDirectorySettings
+            {
+                Recursive = true
+            });
     }
 
     public static void RestorePackages()
@@ -249,5 +261,9 @@ public class BuildActions
                 Context.XBuild(path, XBuildHelper.CreateXBuildSettings(settings, path, target));
         Context.Log.Verbose(string.Format("Finished build for {0} with platform {1}", relativeProjectFile,
             platformTarget));
+    }
+
+    public static void Test()
+    {
     }
 }

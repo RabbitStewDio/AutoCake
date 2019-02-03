@@ -53,6 +53,7 @@ public sealed class ExtProjectParser
     ///     Parses a project file.
     /// </summary>
     /// <param name="parsedProjectPath">The project path.</param>
+    /// <param name="originalProjectFile"></param>
     /// <param name="configuration"></param>
     /// <param name="platform"></param>
     /// <returns>The parsed project.</returns>

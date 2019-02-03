@@ -26,6 +26,7 @@ tools/packages.config.md5sum
 *.tss
 
 .idea/
+.vs/
 
 # Build results
 [Dd]ebug/

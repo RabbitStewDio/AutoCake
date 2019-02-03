@@ -9,8 +9,8 @@ using System.Reflection;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.0.0")]
+// [assembly: AssemblyVersion("3.0.0.0")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.5.0.0")]
-[assembly: AssemblyInformationalVersion("1.5.0+0.Branch.master.Sha.d203a686fd3d0d92a4c90c5ffdde9be64ccad193")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
+[assembly: AssemblyInformationalVersion("3.0.0-beta.1+34.Branch.release-2.0.0.Sha.b4759ede2f4e44056105ab0f6c1022c7fd583321")]

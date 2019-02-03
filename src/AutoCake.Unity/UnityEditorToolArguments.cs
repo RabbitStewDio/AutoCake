@@ -102,6 +102,7 @@ public class UnityEditorToolArguments
         retval.BatchMode = arguments.BatchMode ?? globalDefaults.BatchMode;
         retval.Quit = arguments.Quit ?? globalDefaults.Quit;
         retval.BuildTarget = arguments.BuildTarget ?? globalDefaults.BuildTarget;
+        retval.BuildTargetExecutable = arguments.BuildTargetExecutable ?? globalDefaults.BuildTargetExecutable;
         retval.BuildTargetPath = arguments.BuildTargetPath ?? globalDefaults.BuildTargetPath;
 
         var dict = retval.customArguments as IDictionary<string, object>;

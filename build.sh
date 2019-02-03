@@ -29,6 +29,8 @@ CONFIGURATION="Release"
 VERBOSITY="verbose"
 DRYRUN=
 SHOW_VERSION=false
+SHOW_HELP=false
+SHOW_TREE=false
 SCRIPT_ARGUMENTS=()
 
 # Parse arguments.
@@ -39,7 +41,9 @@ for i in "$@"; do
         -c|--configuration) CONFIGURATION="$2"; shift ;;
         -v|--verbosity) VERBOSITY="$2"; shift ;;
         -d|--dryrun) DRYRUN="-dryrun" ;;
+        -h|--help) SHOW_HELP=true ;;
         --version) SHOW_VERSION=true ;;
+        --showtree) SHOW_TREE=true ;;
         --) shift; SCRIPT_ARGUMENTS+=("$@"); break ;;
         *) SCRIPT_ARGUMENTS+=("$1") ;;
     esac
@@ -96,6 +100,10 @@ fi
 # Start Cake
 if $SHOW_VERSION; then
     exec mono "$CAKE_EXE" -version
+elif $SHOW_HELP; then
+    exec mono "$CAKE_EXE" $SCRIPT -showdescription -verbosity=$VERBOSITY -configuration=$CONFIGURATION -target=$TARGET $DRYRUN "${SCRIPT_ARGUMENTS[@]}"
+elif $SHOW_TREE; then
+    exec mono "$CAKE_EXE" $SCRIPT -showtree -verbosity=$VERBOSITY -configuration=$CONFIGURATION -target=$TARGET $DRYRUN "${SCRIPT_ARGUMENTS[@]}"
 else
     exec mono "$CAKE_EXE" $SCRIPT -verbosity=$VERBOSITY -configuration=$CONFIGURATION -target=$TARGET $DRYRUN "${SCRIPT_ARGUMENTS[@]}"
 fi

@@ -28,6 +28,10 @@ Performs a dry run of the build script.
 No tasks will be executed.
 .PARAMETER Mono
 Tells Cake to use the Mono scripting engine.
+.PARAMETER Help
+Prints a list of all supported targets along with a descriptiong of the target.
+.PARAMETER ShowTree
+Prints a tree of build targets and their dependent tasks.
 .PARAMETER SkipToolPackageRestore
 Skips restoring of packages.
 .PARAMETER ScriptArgs

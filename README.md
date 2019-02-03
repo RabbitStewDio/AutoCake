@@ -18,7 +18,7 @@ The build-script produces Nunit2 compatible test-reports that can be consumed
 by most CI-servers and can publish the NuGet packages to a NuGet server.
 
 
-[`ÀutoCake.Release`](src/AutoCake.Release/README.md) is a smart wrapper around 
+[`AutoCake.Release`](src/AutoCake.Release/README.md) is a smart wrapper around 
 the build script. The release script requires that the project uses Git as 
 source versioning tool, that the project follows the GitFlow style of branching 
 and that the GitVersion tool has been properly configured for the project.
@@ -33,7 +33,23 @@ and rebuilt to include the final release-version numbers. Once completed, the
 release branch is merged back into the development branch and the development
 version number is incremented.
 
-# No Linux support
+[`AutoCake.Unity`](src/AutoCake.Unity/) is a set of build scripts that can 
+intelligently invoke Unity by inspecting the current Unity-Project, finding
+the correct Unity installation for the build and then invoking either the
+standard build triggers or a custom scripted build method. These scripts are
+based on the Cake.Unity addin.
+
+[`AutoCake.Maven`](src/AutoCake.Maven/README.md) module provides a CakeTool 
+for running maven targets. This allows you to build Java and Scala based 
+projects while still retaining the ability to manage branching and release
+logic with AutokCake.Release.
+
+[`AutoCake.TaskAliases`](src/AutoCake.TaskAliases/README.md) contains helper code that allows you to modify 
+pre-defined tasks. These scripts allow you to hook into the predefined 
+build chain of AutoCake without having to rewrite all of the logic from
+scratch.
+
+# No Linux support for AutoCake.Build
 
 You can use the build script to compile and test your code, but you won't be
 able to actually build any NuGet packages.
@@ -48,4 +64,3 @@ files and as usual the documentation is thin on how it works internally.
 
 # Maven support
 
-The [``AutoCake.Maven``](src/AutoCake.Maven/README.md) module provides a CakeTool for running maven targets.

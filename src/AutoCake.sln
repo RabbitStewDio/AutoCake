@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCake.TaskAliases", "Aut
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCake.Maven", "AutoCake.Maven\AutoCake.Maven.csproj", "{EDFF9BAE-521E-4A5C-AAC8-F5A0E46EEB1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCake.Unity", "AutoCake.Unity\AutoCake.Unity.csproj", "{BABC249C-F329-4CAA-ADA8-1E84C7611F4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,8 +49,15 @@ Global
 		{EDFF9BAE-521E-4A5C-AAC8-F5A0E46EEB1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDFF9BAE-521E-4A5C-AAC8-F5A0E46EEB1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDFF9BAE-521E-4A5C-AAC8-F5A0E46EEB1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BABC249C-F329-4CAA-ADA8-1E84C7611F4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BABC249C-F329-4CAA-ADA8-1E84C7611F4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BABC249C-F329-4CAA-ADA8-1E84C7611F4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BABC249C-F329-4CAA-ADA8-1E84C7611F4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9BA3C76-1859-49DD-B0EB-EC02094C474D}
 	EndGlobalSection
 EndGlobal

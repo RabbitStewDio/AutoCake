@@ -204,6 +204,7 @@ public static class UnitTestActions
         /// </summary>
         /// <param name="assemblyPath">The assembly path.</param>
         /// <param name="settings">The settings.</param>
+        /// <param name="useX86"></param>
         public void Run(FilePath assemblyPath, XUnitSettings settings, bool useX86)
         {
             if (assemblyPath == null)
@@ -284,8 +285,16 @@ public static class UnitTestActions
 
         s.ShadowCopy = settings.ShadowCopyAssemblies;
         s.X86 = settings.ForceX86 || projectUnderTest.Platform == PlatformTarget.x86;
-        s.Results = outputDir.CombineWithFilePath(projectUnderTest.Project.AssemblyName + ".nunit3.xml");
-        s.ResultFormat = "nunit3";
+        var path = outputDir.CombineWithFilePath(projectUnderTest.Project.AssemblyName + ".nunit3.xml");
+
+        NUnit3Result rxx = new NUnit3Result();
+        rxx.FileName = path;
+        rxx.Format = "nunit3";
+        rxx.Transform = null;
+        s.Results = new List<NUnit3Result>
+        {
+            rxx
+        };
         s.ArgumentCustomization = args =>
         {
             if (whereClause != null)

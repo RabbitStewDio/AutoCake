@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Cake.Core;
 using Cake.Core.Annotations;
 
@@ -19,7 +20,7 @@ namespace AutoCake.TaskAliases
 
         [CakeMethodAlias]
         [CakeNamespaceImport("Cake.Common.IO.Paths")]
-        public static CakeTaskBuilder<ActionTask> ModifyTask(this ICakeContext context, string name)
+        public static CakeTaskBuilder ModifyTask(this ICakeContext context, string name)
         {
             if (Tasks == null)
             {
@@ -27,12 +28,27 @@ namespace AutoCake.TaskAliases
                 throw new Exception("Please add 'AutoCake.TaskAliases.Configure(Tasks);' to your script before calling this alias.");
             }
 
-            var task = Tasks.First(t => t.Name == name) as ActionTask;
+            var task = Tasks.First(t => t.Name == name);
             if (task == null)
             {
                 throw new ArgumentException(string.Format("There is no preexisting task with name {0}", name));
             }
-            return new CakeTaskBuilder<ActionTask>(task);
+
+            return CreateModifiedTaskBuilder(task);
+        }
+
+        public static CakeTaskBuilder CreateModifiedTaskBuilder(CakeTask task)
+        {
+            try
+            {
+                var builderType = typeof(CakeTaskBuilder);
+                var constr = builderType.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null, new[] { typeof(CakeTask) }, null);
+                return (CakeTaskBuilder)constr.Invoke(null, new[] { task });
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Unable to create task builder.", ex);
+            }
         }
     }
 }

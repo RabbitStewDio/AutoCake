@@ -1,3 +1,4 @@
+#addin Cake.Unity
 #load "src/AutoCake.Build/dependencies.cake"
 #load "src/AutoCake.Build/build-tasks.cake"
 

@@ -11,11 +11,14 @@ using Cake.Core.Tooling;
 
 public class DotNetGeneralTool : DotNetCoreTool<DotNetCoreBuildSettings>
 {
+    readonly ICakeEnvironment environment;
+
     public DotNetGeneralTool(IFileSystem fileSystem,
         ICakeEnvironment environment,
         IProcessRunner processRunner,
         IToolLocator tools) : base(fileSystem, environment, processRunner, tools)
     {
+        this.environment = environment;
     }
 
     public bool DotNetExists(DotNetCoreBuildSettings settings)
@@ -48,7 +51,7 @@ public class DotNetGeneralTool : DotNetCoreTool<DotNetCoreBuildSettings>
         var toolSettings = new DotNetCoreBuildSettings();
         XBuildHelper.ApplyToolSettings(toolSettings, settings);
         toolSettings.ArgumentCustomization = settings.ArgumentCustomization;
-        Run(toolSettings, GetMSBuildArguments(solution, settings));
+        Run(toolSettings, GetMSBuildArguments(solution, settings, environment));
     }
 
     static string GetVerbosityName(Verbosity verbosity)
@@ -69,7 +72,7 @@ public class DotNetGeneralTool : DotNetCoreTool<DotNetCoreBuildSettings>
         throw new CakeException("Encountered unknown MSBuild build log verbosity.");
     }
 
-    static ProcessArgumentBuilder GetMSBuildArguments(FilePath solution, MSBuildSettings settings)
+    static ProcessArgumentBuilder GetMSBuildArguments(FilePath solution, MSBuildSettings settings, ICakeEnvironment env)
     {
         var builder = new ProcessArgumentBuilder();
         builder.Append("msbuild");
@@ -133,7 +136,7 @@ public class DotNetGeneralTool : DotNetCoreTool<DotNetCoreBuildSettings>
         // Got any file loggers?
         if (settings.FileLoggers.Count > 0)
         {
-            var arguments = settings.FileLoggers.Select((logger, index) => { return GetLoggerArgument(index, logger); });
+            var arguments = settings.FileLoggers.Select((logger, index) => { return GetLoggerArgument(index, logger, env); });
 
             foreach (var argument in arguments)
                 builder.Append(argument);
@@ -143,7 +146,7 @@ public class DotNetGeneralTool : DotNetCoreTool<DotNetCoreBuildSettings>
         return builder;
     }
 
-    static string GetLoggerArgument(int index, MSBuildFileLogger logger)
+    static string GetLoggerArgument(int index, MSBuildFileLogger logger, ICakeEnvironment env)
     {
         if (index >= 10)
             throw new InvalidOperationException("Too Many FileLoggers");
@@ -151,7 +154,7 @@ public class DotNetGeneralTool : DotNetCoreTool<DotNetCoreBuildSettings>
         var counter = index == 0 ? string.Empty : index.ToString();
         var argument = string.Format("/fl{0}", counter);
 
-        var parameters = logger.GetParameters();
+        var parameters = logger.GetParameters(env);
         if (!string.IsNullOrWhiteSpace(parameters))
             argument = string.Format("{0} /flp{1}:{2}", argument, counter, parameters);
         return argument;

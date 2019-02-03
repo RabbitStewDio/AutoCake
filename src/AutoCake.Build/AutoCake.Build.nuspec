@@ -13,7 +13,7 @@ The build script will compile the projects for all allowed and defined architect
     <licenseUrl>https://raw.githubusercontent.com/RabbitStewDio/AutoCake/develop/LICENSE</licenseUrl>
     <projectUrl>https://github.com/RabbitStewDio/AutoCake</projectUrl>
     <summary>A automatic release system using Cake and GitFlow to produce and publish builds in a single step.</summary>
-    <copyright>Copyright 2017</copyright>
+    <copyright>Copyright 2019</copyright>
     <tags>Cake GitVersion Build Release</tags>
   </metadata>
   <files>

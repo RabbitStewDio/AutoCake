@@ -110,7 +110,14 @@ public static class GitFlow
     {
         var versionInfo = GitVersioningAliases.FetchVersion();
         ApplyVersionNumbers(target, versionInfo.AssemblySemVer);
-        GitAlias.Commit(Context, "Updating version info for " + target + " branch " + versionInfo.SemVer, true);
+		if (!GitAlias.CheckUncommitedChanges(Context))
+		{
+        	GitAlias.Commit(Context, "Updating version info for " + target + " branch " + versionInfo.SemVer, true);
+		}
+		else
+		{
+            Context.Log.Information("No files have changed during version number update. Skipping commit.");
+		}
     }
 
     public static void DefaultApplyVersionNumbers(string target, string version)
